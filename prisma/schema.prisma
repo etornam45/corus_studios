@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id       String @id @default(cuid())
+  email    String
+  password String
+  name     String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id    String  @id @default(cuid())
+  email String  @unique
+  name  String?
+  phone String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Booking Booking[]
+  Images  Images[]
+}
+
+model Booking {
+  id     String @id @default(cuid())
+
+  message String
+
+  startDate DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  status    BookingStatus
+
+  planId    String
+  plan      Plan @relation(fields: [planId], references: [id])
+
+  userId String
+  user User @relation(fields: [userId], references: [id])
+
+  Images Images[]
+}
+
+enum BookingStatus {
+  Pending
+  Confirmed
+  Done
+  Cancelled
+  Rescheduled
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique // Wedding, Graduation, Studio, etc.
+  slug        String   @unique
+  description String?
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Plan Plan[]
+}
+
+model Plan {
+  id          String  @id @default(cuid())
+  name        String  @unique
+  description String?
+
+  slug String
+
+  price      String
+  features   String[] // JSON array of features
+  categoryId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  category Category @relation(fields: [categoryId], references: [id])
+
+  Booking Booking[]
+}
+
+model Images {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  url       String
+  bookingId String
+  booking   Booking  @relation(fields: [bookingId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isPrimary Boolean  @default(false)
+  isCover   Boolean  @default(false)
+}
