@@ -1,8 +1,8 @@
 import type { ActionFunctionArgs } from "react-router-dom";
 import { writeFile } from "node:fs/promises";
-import { checkAdmin } from "~/lib/check-admin";
+import { checkAdmin } from "~/lib/check-admin.server";
 
-export default async function action({ request }: ActionFunctionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
 
   const admin = await checkAdmin(request);
   if (!admin) {

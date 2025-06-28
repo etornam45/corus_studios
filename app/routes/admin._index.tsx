@@ -2,7 +2,7 @@ import { useLoaderData, useMatch, useMatches } from "@remix-run/react";
 import type { Admin } from "~/lib/types";
 import { useEffect } from "react";
 import { json, redirect, type LoaderFunctionArgs } from "react-router-dom";
-import { checkAdmin } from "~/lib/check-admin";
+import { checkAdmin } from "~/lib/check-admin.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	try {

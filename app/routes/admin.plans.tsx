@@ -6,7 +6,7 @@ import { DataTable } from "~/components/bookings/data-table";
 import { Button } from "~/components/button";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/dialog";
 import { Input } from "~/components/input";
-import { checkAdmin } from "~/lib/check-admin";
+import { checkAdmin } from "~/lib/check-admin.server";
 import { prisma } from "~/lib/prisma.server";
 import type { Category, Plan } from "~/lib/types";
 

@@ -3,7 +3,7 @@ import { useLoaderData } from "@remix-run/react";
 import { json, redirect } from "react-router-dom";
 import { users_columns } from "~/components/bookings/columns";
 import { DataTable } from "~/components/bookings/data-table";
-import { checkAdmin } from "~/lib/check-admin";
+import { checkAdmin } from "~/lib/check-admin.server";
 import { prisma } from "~/lib/prisma.server";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
