@@ -8,4 +8,7 @@ installGlobals();
 
 export default defineConfig({
 	plugins: [remix(), UnoCSS(), tsconfigPaths()],
+	server: {
+		port: 3000
+	}
 });
